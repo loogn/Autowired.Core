@@ -25,6 +25,13 @@ namespace Microsoft.Extensions.DependencyInjection
                     if (serviceAttribute != null)
                     {
                         var serviceType = serviceAttribute.ServiceType;
+						
+                        //类型检查,如果 type 不是 serviceType 的实现或子类或本身
+                        //运行时 type 将无法解析为 serviceType 的实例
+                        if (serviceType != null && serviceType.IsAssignableFrom(type))
+                        {
+                            serviceType = null;
+                        }
                         if (serviceType == null && serviceAttribute.InterfaceServiceType)
                         {
                             serviceType = type.GetInterfaces().FirstOrDefault();
