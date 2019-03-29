@@ -1,7 +1,7 @@
 # Autowired.Core
 
 #### 介绍
-基于.netstandard2.0实现的一个支持属性和字段注入的手脚架
+Make the default DI container  inject fields and properties easily . (based on .netstandard2.0)
 
 #### 安装教程
 
