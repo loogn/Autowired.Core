@@ -21,24 +21,30 @@ namespace Autowired.Core
         /// 是否可以从第一个接口获取服务类型
         /// </summary>
         public bool InterfaceServiceType { get; set; } = true;
+
+        /// <summary>
+        /// 服务(实现)唯一标识
+        /// </summary>
+        public string Identifier { get; set; }
+
         public AppServiceAttribute()
         {
         }
 
-        public AppServiceAttribute(Type serviceType) : this(serviceType, ServiceLifetime.Singleton, false)
+        public AppServiceAttribute(Type serviceType) : this(serviceType, ServiceLifetime.Singleton, null, false)
         {
 
         }
-        public AppServiceAttribute(ServiceLifetime serviceLifetime) : this(null, serviceLifetime, true)
+        public AppServiceAttribute(ServiceLifetime serviceLifetime) : this(null, serviceLifetime, null, true)
         {
         }
 
-        public AppServiceAttribute(Type serviceType, ServiceLifetime serviceLifetime, bool interfaceServiceType)
+        public AppServiceAttribute(Type serviceType, ServiceLifetime serviceLifetime, string identifier, bool interfaceServiceType)
         {
             ServiceType = serviceType;
             Lifetime = serviceLifetime;
+            Identifier = identifier;
             InterfaceServiceType = interfaceServiceType;
         }
-
     }
 }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -38,9 +40,9 @@ namespace Autowired.Core
             else
             {
                 /*
-             （obj,serviceProvider）=>{
-                    ((TService)obj).aa=(TAAType)serviceProvider.GetService(aaFieldType);
-                    ((TService)obj).bb=(TBBType)serviceProvider.GetService(aaFieldType);
+             （obj,sp）=>{
+                    ((TService)obj).aa=(TAAType)sp.GetService(aaFieldType);
+                    ((TService)obj).bb=(TBBType)sp.GetService(aaFieldType);
                     ...
                 }
              */
@@ -49,7 +51,7 @@ namespace Autowired.Core
                 var spParam = Expression.Parameter(typeof(IServiceProvider), "sp");
 
                 var obj = Expression.Convert(objParam, serviceType);
-                var GetService = typeof(IServiceProvider).GetMethod("GetService");
+                var GetService = typeof(AutowiredService).GetMethod("GetService", BindingFlags.Static | BindingFlags.NonPublic);
                 List<Expression> setList = new List<Expression>();
 
                 //字段赋值
@@ -59,7 +61,7 @@ namespace Autowired.Core
                     if (autowiredAttr != null)
                     {
                         var fieldExp = Expression.Field(obj, field);
-                        var createService = Expression.Call(spParam, GetService, Expression.Constant(field.FieldType));
+                        var createService = Expression.Call(null, GetService, spParam, Expression.Constant(field.FieldType), Expression.Constant(autowiredAttr));
                         var setExp = Expression.Assign(fieldExp, Expression.Convert(createService, field.FieldType));
                         setList.Add(setExp);
                     }
@@ -71,7 +73,8 @@ namespace Autowired.Core
                     if (autowiredAttr != null)
                     {
                         var propExp = Expression.Property(obj, property);
-                        var createService = Expression.Call(spParam, GetService, Expression.Constant(property.PropertyType));
+                        var createService = Expression.Call(null, GetService, spParam, Expression.Constant(property.PropertyType), Expression.Constant(autowiredAttr));
+
                         var setExp = Expression.Assign(propExp, Expression.Convert(createService, property.PropertyType));
                         setList.Add(setExp);
                     }
@@ -81,6 +84,45 @@ namespace Autowired.Core
                 autowiredActions[serviceType] = setAction;
                 setAction(service, serviceProvider);
             }
+        }
+
+        /// <summary>
+        /// 根据不同的Identifier获取不同的服务实现
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="serviceType"></param>
+        /// <param name="autowiredAttribute"></param>
+        /// <returns></returns>
+        private static object GetService(IServiceProvider serviceProvider, Type serviceType, AutowiredAttribute autowiredAttribute)
+        {
+            var list = serviceProvider.GetServices(serviceType).ToList();
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            else if (list.Count == 1 && string.IsNullOrEmpty(autowiredAttribute.Identifier))
+            {
+                return list[0];
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(autowiredAttribute.Identifier))
+                {
+                    return list.Last();
+                }
+                else
+                {
+                    foreach (var service in list)
+                    {
+                        var appServiceAttribute = service.GetType().GetCustomAttribute<AppServiceAttribute>(false);
+                        if (appServiceAttribute != null && appServiceAttribute.Identifier == autowiredAttribute.Identifier)
+                        {
+                            return service;
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }
