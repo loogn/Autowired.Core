@@ -20,44 +20,47 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 foreach (var type in assembly.GetTypes())
                 {
-                    var serviceAttribute = type.GetCustomAttribute<AppServiceAttribute>();
-
-                    if (serviceAttribute != null)
+                    foreach (var serviceAttribute in type.GetCustomAttributes<AppServiceAttribute>())
                     {
-                        var serviceType = serviceAttribute.ServiceType;
+                        if (serviceAttribute != null)
+                        {
+                            var serviceType = serviceAttribute.ServiceType;
 
-                        //类型检查,如果 type 不是 serviceType 的实现或子类或本身
-                        //运行时 type 将无法解析为 serviceType 的实例
-                        if (serviceType != null && !serviceType.IsAssignableFrom(type))
-                        {
-                            serviceType = null;
-                        }
-                        if (serviceType == null && serviceAttribute.InterfaceServiceType)
-                        {
-                            serviceType = type.GetInterfaces().FirstOrDefault();
-                        }
-                        if (serviceType == null)
-                        {
-                            serviceType = type;
-                        }
-                        switch (serviceAttribute.Lifetime)
-                        {
-                            case ServiceLifetime.Singleton:
-                                services.AddSingleton(serviceType, type);
-                                break;
-                            case ServiceLifetime.Scoped:
-                                services.AddScoped(serviceType, type);
-                                break;
-                            case ServiceLifetime.Transient:
-                                services.AddTransient(serviceType, type);
-                                break;
-                            default:
-                                break;
+                            //类型检查,如果 type 不是 serviceType 的实现或子类或本身
+                            //运行时 type 将无法解析为 serviceType 的实例
+                            if (serviceType != null && !serviceType.IsAssignableFrom(type))
+                            {
+                                serviceType = null;
+                            }
+
+                            if (serviceType == null && serviceAttribute.InterfaceServiceType)
+                            {
+                                serviceType = type.GetInterfaces().FirstOrDefault();
+                            }
+
+                            if (serviceType == null)
+                            {
+                                serviceType = type;
+                            }
+
+                            switch (serviceAttribute.Lifetime)
+                            {
+                                case ServiceLifetime.Singleton:
+                                    services.AddSingleton(serviceType, type);
+                                    break;
+                                case ServiceLifetime.Scoped:
+                                    services.AddScoped(serviceType, type);
+                                    break;
+                                case ServiceLifetime.Transient:
+                                    services.AddTransient(serviceType, type);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                 }
             }
-
         }
     }
 }
