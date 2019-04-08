@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -12,8 +12,10 @@
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicenseUrl>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
     <FileVersion>1.0.2.0</FileVersion>
-    <PackageReleaseNotes>判断AppServiceAttribute.ServiceType是否可以使用目标类型赋值，防止手误</PackageReleaseNotes>
+    <PackageReleaseNotes>支持多个AppServiceAttribute，支持服务唯一标识Identifier</PackageReleaseNotes>
     <Version>1.0.2</Version>
+    <PackageVersion>1.0.3</PackageVersion>
+    <Title>Autowired.Core</Title>
   </PropertyGroup>
 
   <ItemGroup>
