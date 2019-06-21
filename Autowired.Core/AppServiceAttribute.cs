@@ -41,7 +41,11 @@ namespace Autowired.Core
         {
         }
 
-        public AppServiceAttribute(Type serviceType, ServiceLifetime serviceLifetime, string identifier,
+        public AppServiceAttribute(string identifier) : this(null, ServiceLifetime.Singleton, identifier, true)
+        {
+        }
+
+        private AppServiceAttribute(Type serviceType, ServiceLifetime serviceLifetime, string identifier,
             bool interfaceServiceType)
         {
             ServiceType = serviceType;
