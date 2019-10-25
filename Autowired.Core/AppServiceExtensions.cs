@@ -16,7 +16,11 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services"></param>
         public static void AddAppServices(this IServiceCollection services)
         {
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            //AddServices(services, AppDomain.CurrentDomain.GetAssemblies()); GetAssemblies只能获取已加载的程序集，可能不全
+            var files = Directory.GetFiles(AppContext.BaseDirectory, "*.dll");
+            var assemblies = files.Select(x => Assembly.LoadFile(x));
+
+            foreach (var assembly in assemblies)
             {
                 foreach (var type in assembly.GetTypes())
                 {
@@ -53,8 +57,6 @@ namespace Microsoft.Extensions.DependencyInjection
                                     break;
                                 case ServiceLifetime.Transient:
                                     services.AddTransient(serviceType, type);
-                                    break;
-                                default:
                                     break;
                             }
                         }
