@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             //AddServices(services, AppDomain.CurrentDomain.GetAssemblies()); GetAssemblies只能获取已加载的程序集，可能不全
             var files = Directory.GetFiles(AppContext.BaseDirectory, "*.dll");
-            var assemblies = files.Select(x => Assembly.LoadFile(x));
+            var assemblies = files.Select(x => Assembly.LoadFrom(x));
             AddAppServices(services, assemblies);
         }
 

@@ -12,10 +12,14 @@
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicenseUrl>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
     <FileVersion>1.0.2.0</FileVersion>
-    <PackageReleaseNotes>支持多个AppServiceAttribute，支持服务唯一标识Identifier</PackageReleaseNotes>
+    <PackageReleaseNotes>加载服务的逻辑改为从文件加载</PackageReleaseNotes>
     <Version>1.0.2</Version>
-    <PackageVersion>1.0.3</PackageVersion>
+    <PackageVersion>1.0.4</PackageVersion>
     <Title>Autowired.Core</Title>
+    <Copyright>loogn</Copyright>
+    <Owners>loogn</Owners>
+    <Summary>.net core Ioc 自动注入</Summary>
+    <PackOnBuild>true</PackOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
