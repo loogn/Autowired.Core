@@ -20,10 +20,14 @@ namespace Autowired.Core
         public Type ServiceType { get; set; }
 
         /// <summary>
-        /// 是否可以从第一个接口获取服务类型
+        /// 是否可以从第一个接口获取服务类型，优先性低于ServiceType
         /// </summary>
         public bool InterfaceServiceType { get; set; } = true;
 
+        /// <summary>
+        /// 是否使用基类作为服务类型，优先性低于InterfaceServiceType，如果基类是object，则不生效
+        /// </summary>
+        public bool BaseServiceType { get; set; }
         /// <summary>
         /// 服务(实现)唯一标识
         /// </summary>

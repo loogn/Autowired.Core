@@ -47,6 +47,11 @@ namespace Microsoft.Extensions.DependencyInjection
                                 serviceType = type.GetInterfaces().FirstOrDefault();
                             }
 
+                            if (serviceType == null && serviceAttribute.BaseServiceType && type.BaseType != typeof(object))
+                            {
+                                serviceType = type.BaseType;
+                            }
+
                             if (serviceType == null)
                             {
                                 serviceType = type;
