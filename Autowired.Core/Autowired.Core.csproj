@@ -4,17 +4,16 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>loogn</Authors>
     <Company>loogn</Company>
-    <Description>Make the default DI container  inject fields and properties easily . (based on .netstandard2.0)
-</Description>
+    <Description>Make the default DI container  inject fields and properties easily . (based on .netstandard2.0)</Description>
     <PackageProjectUrl>https://gitee.com/loogn/Autowired.Core</PackageProjectUrl>
     <RepositoryUrl>https://gitee.com/loogn/Autowired.Core</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
     <FileVersion>1.0.2.0</FileVersion>
-    <PackageReleaseNotes>加载服务的逻辑改为从文件加载</PackageReleaseNotes>
+    <PackageReleaseNotes>添加AppSettingAttribute,可以从配置文件加载服务</PackageReleaseNotes>
     <Version>1.0.2</Version>
-    <PackageVersion>1.0.4</PackageVersion>
+    <PackageVersion>1.0.5</PackageVersion>
     <Title>Autowired.Core</Title>
     <Copyright>loogn</Copyright>
     <Owners>loogn</Owners>
@@ -23,6 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
