@@ -10,7 +10,7 @@ namespace Autowired.Core
     /// <summary>
     /// 从容器装配service
     /// </summary>
-    [AppService]
+    [AppService(ServiceLifetime.Scoped)]
     public class AutowiredService
     {
         IServiceProvider serviceProvider;
@@ -20,7 +20,7 @@ namespace Autowired.Core
             this.serviceProvider = serviceProvider;
         }
 
-        Dictionary<Type, Action<object, IServiceProvider>> autowiredActions =
+        private  static Dictionary<Type, Action<object, IServiceProvider>> autowiredActions =
             new Dictionary<Type, Action<object, IServiceProvider>>();
 
         public void Autowired(object service)
