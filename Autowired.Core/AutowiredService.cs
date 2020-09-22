@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -20,8 +21,8 @@ namespace Autowired.Core
             this.serviceProvider = serviceProvider;
         }
 
-        private  Dictionary<Type, Action<object, IServiceProvider>> autowiredActions =
-            new Dictionary<Type, Action<object, IServiceProvider>>();
+        private ConcurrentDictionary<Type, Action<object, IServiceProvider>> autowiredActions =
+                    new ConcurrentDictionary<Type, Action<object, IServiceProvider>>();
 
         public void Autowired(object service)
         {

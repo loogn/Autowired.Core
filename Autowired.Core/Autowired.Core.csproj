@@ -8,11 +8,11 @@
     <PackageProjectUrl>https://gitee.com/loogn/Autowired.Core</PackageProjectUrl>
     <RepositoryUrl>https://gitee.com/loogn/Autowired.Core</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
-    <PackageReleaseNotes>修改AutowiredService的生命周期为Scoped</PackageReleaseNotes>
-    <Version>1.0.2</Version>
-    <PackageVersion>2.0.0</PackageVersion>
+    <AssemblyVersion>1.0.6.0</AssemblyVersion>
+    <FileVersion>1.0.6.0</FileVersion>
+    <PackageReleaseNotes>修改存储服务实例化的Dictionary为ConcurrentDictionary</PackageReleaseNotes>
+    <Version>1.0.6</Version>
+    <PackageVersion>1.0.6</PackageVersion>
     <Title>Autowired.Core</Title>
     <Copyright>loogn</Copyright>
     <Owners>loogn</Owners>
